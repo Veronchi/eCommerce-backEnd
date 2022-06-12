@@ -1,8 +1,10 @@
 import Express from "express";
-import userService from "./user.service";
+import * as userService from "./user.service";
+import ApiError from "../../error/ApiError";
+
 const router = Express.Router();
 
-router.post("/", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const user = await userService.read(req.body);
     res.json(user);
@@ -11,7 +13,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const user = await userService.create(req.body);
     res.json(user);
