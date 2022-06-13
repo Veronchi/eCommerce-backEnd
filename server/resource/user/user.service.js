@@ -1,9 +1,14 @@
 import { User } from "../common/models";
 
 async function read(userData) {
-  return await User.findOne({
-    where: userData.login,
+  const user = await User.findOne({
+    where:{
+      login: userData.login,
+    } 
   });
+  if(user === null) return [];
+
+  return user;
 }
 
 async function create(userData) {
@@ -26,4 +31,4 @@ async function remove(userData) {
   });
 }
 
-export { read, create, update };
+export { read, create, update, remove };
