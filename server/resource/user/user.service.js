@@ -18,7 +18,7 @@ async function create(userData) {
 async function update(userData) {
   return await User.update(userData, {
     where: {
-      login: userData.login,
+      id: userData.id,
     },
   });
 }
@@ -26,7 +26,7 @@ async function update(userData) {
 async function remove(userData) {
   return await User.destroy({
     where: {
-      login: userData.login,
+      id: userData.id,
     },
   });
 }
