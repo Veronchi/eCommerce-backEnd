@@ -20,7 +20,6 @@ async function getOne(categoryData) {
 }
 
 async function update(categoryData) {
-  console.log(categoryData.id)
   return await Category.update(categoryData, {
     where: {
       id: categoryData.id,
