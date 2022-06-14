@@ -14,7 +14,7 @@ async function getOne(brandData) {
       name: brandData.name,
     },
   });
-  if(brand === null) return [];
+  if (brand === null) return [];
 
   return brand;
 }

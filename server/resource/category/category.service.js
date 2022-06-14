@@ -14,7 +14,7 @@ async function getOne(categoryData) {
       name: categoryData.name,
     },
   });
-  if(category === null) return [];
+  if (category === null) return [];
 
   return category;
 }

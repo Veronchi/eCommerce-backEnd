@@ -1,188 +1,188 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../db";
 
-const User = sequelize.define('User', {
+const User = sequelize.define("User", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   login: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   role: {
     type: DataTypes.STRING,
-    defaultValue: 'user',
+    defaultValue: "user",
     allowNull: false,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
-const Basket = sequelize.define('Basket', {
+const Basket = sequelize.define("Basket", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
-  }
+    primaryKey: true,
+  },
 });
 
-const Basket_product = sequelize.define('Basket_product', {
+const Basket_product = sequelize.define("Basket_product", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
-  }
+    primaryKey: true,
+  },
 });
 
-const Product = sequelize.define('Product', {
+const Product = sequelize.define("Product", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   price: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   rating: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   img: {
     type: DataTypes.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
-const Product_rating = sequelize.define('Product_rating', {
+const Product_rating = sequelize.define("Product_rating", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   rating: {
     type: DataTypes.INTEGER,
-    allowNull: false
-  }
-})
+    allowNull: false,
+  },
+});
 
-const Product_info = sequelize.define('Product_info', {
+const Product_info = sequelize.define("Product_info", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   title: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
-const Category = sequelize.define('Category', {
+const Category = sequelize.define("Category", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
-const Brand = sequelize.define('Brand', {
+const Brand = sequelize.define("Brand", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
-const CategoryBrand = sequelize.define('CategoryBrand', {
+const CategoryBrand = sequelize.define("CategoryBrand", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true
-  }
-})
+    primaryKey: true,
+  },
+});
 
 User.hasOne(Basket, {
-  foreignKey: 'user_id'
+  foreignKey: "user_id",
 });
 Basket.belongsTo(User);
 
 User.hasMany(Product_rating, {
-  foreignKey: 'user_id'
+  foreignKey: "user_id",
 });
 Product_rating.belongsTo(User);
 
 Basket.hasMany(Basket_product, {
-  foreignKey: 'basket_id'
+  foreignKey: "basket_id",
 });
 Basket_product.belongsTo(Basket);
 
 Product.hasOne(Basket_product, {
-  foreignKey: 'product_id'
+  foreignKey: "product_id",
 });
 Basket_product.belongsTo(Product);
 
 Product.hasMany(Product_info, {
-  foreignKey: 'product_id'
+  foreignKey: "product_id",
 });
 Product_info.belongsTo(Product);
 
 Product.hasMany(Product_rating, {
-  foreignKey: 'product_id'
+  foreignKey: "product_id",
 });
 Product_rating.belongsTo(Product);
 
 Category.hasMany(Product, {
-  foreignKey: 'category_id'
+  foreignKey: "category_id",
 });
 Product.belongsTo(Category);
 
 Brand.hasMany(Product, {
-  foreignKey: 'brand_id'
+  foreignKey: "brand_id",
 });
 Product.belongsTo(Brand);
 
-Category.belongsToMany(Brand, {through: CategoryBrand});
-Brand.belongsToMany(Category, {through: CategoryBrand});
+Category.belongsToMany(Brand, { through: CategoryBrand });
+Brand.belongsToMany(Category, { through: CategoryBrand });
 
 export {
   User,
@@ -193,5 +193,5 @@ export {
   Product_rating,
   Category,
   Brand,
-  CategoryBrand
-}
+  CategoryBrand,
+};

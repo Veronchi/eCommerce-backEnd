@@ -3,7 +3,7 @@ import * as brandService from "./brand.service";
 
 const router = Express.Router();
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const brand = await brandService.create(req.body);
     return res.json(brand);
@@ -12,7 +12,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.get('/', async(req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const brands = await brandService.getAll(req.body);
     return res.json(brands);
@@ -21,7 +21,7 @@ router.get('/', async(req, res, next) => {
   }
 });
 
-router.get('/get-brand', async(req, res, next) => {
+router.get("/get-brand", async (req, res, next) => {
   try {
     const brand = await brandService.getOne(req.body);
     return res.json(brand);
@@ -30,7 +30,7 @@ router.get('/get-brand', async(req, res, next) => {
   }
 });
 
-router.patch('/', async(req, res, next) => {
+router.patch("/", async (req, res, next) => {
   try {
     const brand = await brandService.update(req.body);
     return res.json(brand);
@@ -39,7 +39,7 @@ router.patch('/', async(req, res, next) => {
   }
 });
 
-router.delete('/', async(req, res,next) => {
+router.delete("/", async (req, res, next) => {
   try {
     const brand = await brandService.remove(req.body);
     return res.json(brand);

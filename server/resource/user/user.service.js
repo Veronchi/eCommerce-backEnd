@@ -2,11 +2,11 @@ import { User } from "../common/models";
 
 async function read(userData) {
   const user = await User.findOne({
-    where:{
+    where: {
       login: userData.login,
-    } 
+    },
   });
-  if(user === null) return [];
+  if (user === null) return [];
 
   return user;
 }
