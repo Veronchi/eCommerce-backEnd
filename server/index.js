@@ -3,6 +3,7 @@ import cors from "cors";
 import sequelize from "./db";
 import userRoute from "./resource/user/user.routes";
 import categoryRoute from "./resource/category/category.routes";
+import brandRoute from "./resource/brand/brand.routes";
 import errorHadler from './middleware/ErrorHandlingMiddleware';
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/user', userRoute);
 app.use('/api/category', categoryRoute);
+app.use('/api/brand', brandRoute);
 
 
 app.use(errorHadler);
