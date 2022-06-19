@@ -142,44 +142,28 @@ const CategoryBrand = sequelize.define("CategoryBrand", {
   },
 });
 
-User.hasOne(Basket, {
-  foreignKey: "user_id",
-});
+User.hasOne(Basket);
 Basket.belongsTo(User);
 
-User.hasMany(Product_rating, {
-  foreignKey: "user_id",
-});
+User.hasMany(Product_rating);
 Product_rating.belongsTo(User);
 
-Basket.hasMany(Basket_product, {
-  foreignKey: "basket_id",
-});
+Basket.hasMany(Basket_product);
 Basket_product.belongsTo(Basket);
 
-Product.hasOne(Basket_product, {
-  foreignKey: "product_id",
-});
+Product.hasOne(Basket_product);
 Basket_product.belongsTo(Product);
 
-Product.hasMany(Product_info, {
-  foreignKey: "product_id",
-});
+Product.hasMany(Product_info);
 Product_info.belongsTo(Product);
 
-Product.hasMany(Product_rating, {
-  foreignKey: "product_id",
-});
+Product.hasMany(Product_rating);
 Product_rating.belongsTo(Product);
 
-Category.hasMany(Product, {
-  foreignKey: "category_id",
-});
+Category.hasMany(Product);
 Product.belongsTo(Category);
 
-Brand.hasMany(Product, {
-  foreignKey: "brand_id",
-});
+Brand.hasMany(Product);
 Product.belongsTo(Brand);
 
 Category.belongsToMany(Brand, { through: CategoryBrand });
