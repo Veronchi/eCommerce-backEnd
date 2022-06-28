@@ -13,4 +13,13 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  try {
+    const products = await productService.getAll(req.query);
+    return res.json(products);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

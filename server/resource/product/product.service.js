@@ -22,5 +22,30 @@ async function create(productData) {
   });
 }
 
+async function getAll(productData) {
+  const { brandId, categoryId } = productData;
+  let product;
+  console.log(productData);
+  if (!brandId && !categoryId) {
+    product = await Product.findAll();
+  } else if (brandId && !categoryId) {
+    product = await Product.findAll({
+      where: { BrandId: brandId },
+    });
+  } else if (!brandId && categoryId) {
+    product = await Product.findAll({
+      where: { CategoryId: categoryId },
+    });
+  } else if (brandId && categoryId) {
+    product = await Product.findAll({
+      where: {
+        BrandId: brandId,
+        CategoryId: categoryId,
+      },
+    });
+  }
 
-export { create };
+  return product;
+}
+
+export { create, getAll };
