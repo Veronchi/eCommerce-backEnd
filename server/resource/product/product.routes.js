@@ -31,4 +31,22 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.patch("/", async (req, res, next) => {
+  try {
+    const product = await productService.update(req.body);
+    return res.json(product);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/", async (req, res, next) => {
+  try {
+    const product = await productService.remove(req.body);
+    return res.json(product);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

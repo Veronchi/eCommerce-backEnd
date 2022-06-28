@@ -81,4 +81,20 @@ async function getOne(productData) {
   return product;
 }
 
-export { create, getAll, getOne };
+async function update(productData) {
+  return await Product.update(productData, {
+    where: {
+      id: productData.id,
+    },
+  });
+}
+
+async function remove(productData) {
+  return await Product.destroy({
+    where: {
+      id: productData.id,
+    },
+  });
+}
+
+export { create, getAll, getOne, update, remove };
