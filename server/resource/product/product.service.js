@@ -23,25 +23,34 @@ async function create(productData) {
 }
 
 async function getAll(productData) {
-  const { brandId, categoryId } = productData;
+  let { brandId, categoryId, limit, page } = productData;
+  page = page || 1;
+  limit = limit || 10;
+  let offset = page * limit - limit;
   let product;
-  console.log(productData);
+  
   if (!brandId && !categoryId) {
-    product = await Product.findAll();
+    product = await Product.findAndCountAll({ limit, offset });
   } else if (brandId && !categoryId) {
-    product = await Product.findAll({
+    product = await Product.findAndCountAll({
       where: { BrandId: brandId },
+      limit,
+      offset,
     });
   } else if (!brandId && categoryId) {
-    product = await Product.findAll({
+    product = await Product.findAndCountAll({
       where: { CategoryId: categoryId },
+      limit,
+      offset,
     });
   } else if (brandId && categoryId) {
-    product = await Product.findAll({
+    product = await Product.findAndCountAll({
       where: {
         BrandId: brandId,
         CategoryId: categoryId,
       },
+      limit,
+      offset,
     });
   }
 
