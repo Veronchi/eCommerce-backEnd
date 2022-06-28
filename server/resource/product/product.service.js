@@ -9,7 +9,7 @@ async function create(productData) {
   if (!productData.files) {
     return ApiError.badRequest("No files were uploaded");
   }
-  
+
   const { img } = productData.files;
   let fileName = uuidv4() + ".jpg";
   img.mv(path.resolve(__dirname, "..", "..", "static", fileName));
@@ -19,7 +19,7 @@ async function create(productData) {
     BrandId: brandId,
     CategoryId: categoryId,
     img: fileName,
-    info
+    info,
   });
 
   if (info) {
@@ -28,12 +28,12 @@ async function create(productData) {
       Product_info.create({
         title: i.title,
         description: i.description,
-        ProductId: product.id
+        ProductId: product.id,
       });
     });
   }
 
-  return product
+  return product;
 }
 
 async function getAll(productData) {
@@ -71,4 +71,14 @@ async function getAll(productData) {
   return product;
 }
 
-export { create, getAll };
+async function getOne(productData) {
+  const { id } = productData;
+  const product = await Product.findOne({
+    where: { id },
+    include: [{ model: Product_info, as: "info" }],
+  });
+
+  return product;
+}
+
+export { create, getAll, getOne };

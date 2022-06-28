@@ -22,4 +22,13 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  try {
+    const product = await productService.getOne(req.params);
+    return res.json(product);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
