@@ -154,7 +154,7 @@ Basket_product.belongsTo(Basket);
 Product.hasOne(Basket_product);
 Basket_product.belongsTo(Product);
 
-Product.hasMany(Product_info);
+Product.hasMany(Product_info, {as: "info"});
 Product_info.belongsTo(Product);
 
 Product.hasMany(Product_rating);
