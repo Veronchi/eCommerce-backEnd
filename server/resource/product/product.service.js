@@ -16,8 +16,8 @@ async function create(productData) {
   return await Product.create({
     name,
     price,
-    brandId,
-    categoryId,
+    BrandId: brandId,
+    CategoryId: categoryId,
     img: fileName,
   });
 }
