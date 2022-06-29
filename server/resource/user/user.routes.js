@@ -1,7 +1,5 @@
 import Express from "express";
 import * as userService from "./user.service";
-import ApiError from "../../error/ApiError";
-
 const router = Express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -13,10 +11,10 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/registration", async (req, res, next) => {
   try {
-    const user = await userService.create(req.body);
-    res.json(user);
+    const token = await userService.registration(req.body);
+    res.json({token});
   } catch (error) {
     next(error);
   }

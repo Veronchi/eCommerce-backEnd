@@ -26,7 +26,6 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     defaultValue: "user",
     allowNull: false,
-    unique: true,
   },
 });
 
