@@ -11,17 +11,6 @@ function generateJwt(id, email, role) {
   );
 }
 
-async function read(userData) {
-  const user = await User.findOne({
-    where: {
-      login: userData.login,
-    },
-  });
-  if (user === null) return [];
-
-  return user;
-}
-
 async function registration(userData) {
   const { login, email, password, role } = userData;
 
