@@ -7,7 +7,7 @@ async function create(productData) {
   const { name, price, brandId, categoryId, info } = productData.body;
 
   if (!productData.files) {
-    return ApiError.badRequest("No files were uploaded");
+    throw ApiError.badRequest("No files were uploaded");
   }
 
   const { img } = productData.files;
