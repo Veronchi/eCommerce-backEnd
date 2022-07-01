@@ -11,6 +11,15 @@ router.post("/registration", async (req, res, next) => {
   }
 });
 
+router.post("/login", async (req, res, next) => {
+  try {
+    const token = await userService.login(req.body);
+    res.json({token});
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.patch("/", async (req, res, next) => {
   try {
     const updUser = await userService.update(req.body);

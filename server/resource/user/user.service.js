@@ -4,34 +4,54 @@ import Jwt from "jsonwebtoken";
 import ApiError from "../../error/ApiError";
 
 function generateJwt(id, email, role) {
-  return Jwt.sign(
-    { id, email, role },
-    process.env.SECRET_KEY,
-    {expiresIn: "24h"}
-  );
+  return Jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
+    expiresIn: "24h",
+  });
 }
 
 async function registration(userData) {
   const { login, email, password, role } = userData;
 
   if (!login || !password) {
-    return ApiError.badRequest("incorrect login or password");
+    throw ApiError.badRequest("incorrect login or password");
   }
 
   const condidate = await User.findOne({ where: { login, email } });
 
   if (condidate) {
-    return ApiError.badRequest(
+    throw ApiError.badRequest(
       "user with such login or email address already exists"
     );
   }
 
   const hashPassword = await bcrypt.hash(password, 5);
-  const user = await User.create({ login, email, role, password: hashPassword });
+  const user = await User.create({
+    login,
+    email,
+    role,
+    password: hashPassword,
+  });
   const basket = await Basket.create({ UserId: user.id });
   const token = generateJwt(user.id, user.email, user.role);
 
   return token;
+}
+
+async function login(userData) {
+  const { login, password } = userData;
+  const user = await User.findOne({ where: { login } });
+
+  if (!user) {
+    throw ApiError.internal("User is not found");
+  }
+
+  let comparePassword = await bcrypt.compare(password, user.password);
+
+  if (!comparePassword) {
+    throw ApiError.internal("Invalid password or login");
+  }
+
+  return generateJwt(user.id, user.email, user.role);
 }
 
 async function update(userData) {
@@ -50,4 +70,4 @@ async function remove(userData) {
   });
 }
 
-export { read, registration, update, remove };
+export { registration, login, update, remove };
