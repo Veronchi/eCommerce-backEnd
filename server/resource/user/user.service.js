@@ -1,19 +1,13 @@
 import { User, Basket } from "../common/models";
 import bcrypt from "bcrypt";
-import Jwt from "jsonwebtoken";
+import generateJwt from "../../middleware/JwtGenerator";
 import ApiError from "../../error/ApiError";
-
-function generateJwt(id, email, role) {
-  return Jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
-    expiresIn: "24h",
-  });
-}
 
 async function registration(userData) {
   const { login, email, password, role } = userData;
 
   if (!login || !password) {
-    throw ApiError.badRequest("incorrect login or password");
+    throw ApiError.badRequest("login or password not entered");
   }
 
   const condidate = await User.findOne({ where: { login, email } });
