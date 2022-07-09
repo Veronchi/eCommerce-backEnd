@@ -48,6 +48,12 @@ async function login(userData) {
   return generateJwt(user.id, user.email, user.role);
 }
 
+async function check(userData) {
+  const token = generateJwt(userData.id, userData.email, userData.role);
+
+  return token;
+}
+
 async function update(userData) {
   return await User.update(userData, {
     where: {
@@ -64,4 +70,4 @@ async function remove(userData) {
   });
 }
 
-export { registration, login, update, remove };
+export { registration, login, check, update, remove };
