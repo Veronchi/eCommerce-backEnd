@@ -1,9 +1,10 @@
 import Express from "express";
 import * as categoryService from "./category.service";
+import checkRoleMiddleware from "../../middleware/checkRoleMiddleware";
 
 const router = Express.Router();
 
-router.post("/", async (req, res, next) => {
+router.post("/", checkRoleMiddleware("ADMIN"), async (req, res, next) => {
   try {
     const category = await categoryService.create(req.body);
     return res.json(category);
@@ -30,7 +31,7 @@ router.get("/get-category", async (req, res, next) => {
   }
 });
 
-router.patch("/", async (req, res, next) => {
+router.patch("/", checkRoleMiddleware("ADMIN"), async (req, res, next) => {
   try {
     const category = await categoryService.update(req.body);
     return res.json(category);
@@ -39,7 +40,7 @@ router.patch("/", async (req, res, next) => {
   }
 });
 
-router.delete("/", async (req, res, next) => {
+router.delete("/", checkRoleMiddleware("ADMIN"), async (req, res, next) => {
   try {
     const category = await categoryService.remove(req.body);
     return res.json(category);
