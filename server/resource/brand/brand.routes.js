@@ -1,9 +1,10 @@
 import Express from "express";
 import * as brandService from "./brand.service";
+import checkRoleMiddleware from "../../middleware/checkRoleMiddleware";
 
 const router = Express.Router();
 
-router.post("/", async (req, res, next) => {
+router.post("/", checkRoleMiddleware("ADMIN"), async (req, res, next) => {
   try {
     const brand = await brandService.create(req.body);
     return res.json(brand);
@@ -30,7 +31,7 @@ router.get("/get-brand", async (req, res, next) => {
   }
 });
 
-router.patch("/", async (req, res, next) => {
+router.patch("/", checkRoleMiddleware("ADMIN"), async (req, res, next) => {
   try {
     const brand = await brandService.update(req.body);
     return res.json(brand);
@@ -39,7 +40,7 @@ router.patch("/", async (req, res, next) => {
   }
 });
 
-router.delete("/", async (req, res, next) => {
+router.delete("/", checkRoleMiddleware("ADMIN"), async (req, res, next) => {
   try {
     const brand = await brandService.remove(req.body);
     return res.json(brand);
