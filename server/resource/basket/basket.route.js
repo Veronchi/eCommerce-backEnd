@@ -6,7 +6,7 @@ const router = Express.Router();
 
 router.post("/", authMiddleware, async(req, res, next) =>{
   try {
-    const result = await basketService.create(req);
+    const result = await basketService.addProduct(req);
     return res.json(result);
   } catch (error) {
     next(error);
