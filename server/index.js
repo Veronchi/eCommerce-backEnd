@@ -7,6 +7,7 @@ import userRoute from "./resource/user/user.routes";
 import categoryRoute from "./resource/category/category.routes";
 import brandRoute from "./resource/brand/brand.routes";
 import productRoute from "./resource/product/product.routes";
+import basketRoute from "./resource/basket/basket.route";
 import errorHadler from './middleware/ErrorHandlingMiddleware';
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/user', userRoute);
 app.use('/api/category', categoryRoute);
 app.use('/api/brand', brandRoute);
 app.use('/api/product', productRoute);
+app.use('/api/basket', basketRoute);
 
 
 app.use(errorHadler);
