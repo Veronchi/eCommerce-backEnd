@@ -4,8 +4,8 @@ import path from "node:path";
 import ApiError from "../../error/ApiError";
 
 async function create(productData) {
-  const { name, price, brandId, categoryId, info } = productData.body;
-
+  const { name, price, brandId, categoryId } = productData.body;
+  
   if (!productData.files) {
     throw ApiError.badRequest("No files were uploaded");
   }
@@ -18,20 +18,19 @@ async function create(productData) {
     price,
     BrandId: brandId,
     CategoryId: categoryId,
-    img: fileName,
-    info,
+    img: fileName
   });
 
-  if (info) {
-    info = JSON.parse(info);
-    info.forEach((i) => {
-      Product_info.create({
-        title: i.title,
-        description: i.description,
-        ProductId: product.id,
-      });
-    });
-  }
+  // if (info) {
+  //   info = JSON.parse();
+  //   info.forEach((i) => {
+  //     Product_info.create({
+  //       title: i.title,
+  //       description: i.description,
+  //       ProductId: product.id,
+  //     });
+  //   });
+  // }
 
   return product;
 }
