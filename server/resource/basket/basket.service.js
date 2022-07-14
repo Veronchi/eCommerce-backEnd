@@ -37,4 +37,30 @@ async function getProducts(basketData) {
   return basketArr;
 }
 
-export { addProduct, getProducts };
+async function deleteProduct(basketData) {
+  const { limit } = basketData.query;
+  const { id } = basketData.params;
+  const token = basketData.headers.authorization.split(" ")[1];
+  const user = Jwt.verify(token, process.env.SECRET_KEY);
+
+  const basket = await Basket.findOne({ where: { UserId: user.id } });
+  const product = await Basket_product.findOne({
+    where: {
+      BasketId: basket.id,
+      ProductId: id,
+    },
+  });
+
+  if (product && limit) {
+    await product.destroy();
+  } else {
+    await Basket_product.destroy({
+      where: {
+        BasketId: basket.id,
+        ProductId: id,
+      },
+    });
+  }
+}
+
+export { addProduct, getProducts, deleteProduct };
