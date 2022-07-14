@@ -22,4 +22,13 @@ router.get("/", authMiddleware, async (req, res, next) => {
   }
 });
 
+router.delete("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const result = await basketService.deleteProduct(req);
+    return res.json(result);
+  } catch (error) {
+    next(error)
+  }
+});
+
 export default router;
