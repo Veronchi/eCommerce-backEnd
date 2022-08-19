@@ -10,9 +10,10 @@ async function registration(userData) {
     throw ApiError.badRequest("login or password not entered");
   }
 
-  const condidate = await User.findOne({ where: { login, email } });
+  const condidateEmail = await User.findOne({ where: { email } });
+  const condidateLogin = await User.findOne({ where: { login } });
 
-  if (condidate) {
+  if (condidateEmail || condidateLogin) {
     throw ApiError.badRequest(
       "user with such login or email address already exists"
     );
