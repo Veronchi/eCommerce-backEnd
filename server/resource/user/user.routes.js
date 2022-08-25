@@ -22,7 +22,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.get("/", authMiddleware, async (req, res, next) => {
+router.get("/auth", authMiddleware, async (req, res, next) => {
   try {
     const token = await userService.check(req.body);
     res.json({token});
