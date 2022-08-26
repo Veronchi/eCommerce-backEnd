@@ -1,4 +1,5 @@
 import Jwt from "jsonwebtoken";
+import ApiError from "../error/ApiError";
 
 export default function (role) {
   return function (req, res, next) {
@@ -9,19 +10,19 @@ export default function (role) {
       const token = req.headers.authorization.split(" ")[1];
 
       if (!token) {
-        throw res.status(401).json({ message: "Unauthorized" });
+        throw ApiError.forbidden("Unauthorized");
       }
 
       const decoded = Jwt.verify(token, process.env.SECRET_KEY);
 
-      if(decoded.role !== role) {
-        throw res.status(403).json({ message: "No access" });
+      if (decoded.role !== role) {
+        throw ApiError.forbidden("No access");
       }
-      
+
       req.user = decoded;
       next();
     } catch (error) {
-      res.status(401).json({ message: "Unauthorized" });
+      next(error);
     }
   };
 }
